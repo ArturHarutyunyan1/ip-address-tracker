@@ -17,9 +17,8 @@ function updateMap(data){
     let {lng} = data.location
     map.setView([lat, lng], 13)
     L.marker([lat, lng], {icon: customMarker}).addTo(map)
-    console.log(data);
     currentIP.innerHTML = `${data.ip}`
-    currentLocation.innerHTML = `${data.location.city}`
+    currentLocation.innerHTML = `${data.location.city}, ${data.location.country}`
     currentTimeZone.innerHTML = `UTC ${data.location.timezone}`
     currentISP.innerHTML = `${data.isp}`
 }
