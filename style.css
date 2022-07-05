@@ -39,8 +39,8 @@ body{
 }
 
 .input-line{
-    width: 550px;
-    height: 50px;
+    width: 600px;
+    height: 55px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,7 +58,7 @@ body{
 }
 
 .input-line button{
-    width: 20%;
+    width: 15%;
     height: 100%;
     background: black;
     border: none;
@@ -90,7 +90,7 @@ body{
 .row-item{
     width: 300px;
     margin-left: 35px;
-    border-right: 1px solid black;
+    border-right: 1px solid var(--very-dark-gray);
 }
 
 .row-item:last-child{
@@ -104,6 +104,7 @@ body{
 }
 
 .col h2{
+    font-size: 20px;
     text-align: left;
     margin: 15px 0;
 }
@@ -220,6 +221,7 @@ body{
     }
     .row-item{
         border: none;
+        border-right: none;
         margin: 0;
     }
     .col{
@@ -230,5 +232,6 @@ body{
     }
     .col h2{
         font-size: 20px;
+        text-align: center;
     }
 }

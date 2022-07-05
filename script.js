@@ -37,7 +37,7 @@ form.addEventListener('submit', (e)=>{
     e.preventDefault()
     let value = input.value
 
-    fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_NK0T54ViEPLTqUEEzgSbAh387MGgX&ipAddress=${value}`)
+    fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_z21iQeHhr6AGrZcRjPNPmfIw7dYxV&ipAddress=${value}`)
     .then((res) => res.json())
     .then((data) => {
         lat = data.location.lat
