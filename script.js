@@ -22,7 +22,7 @@ async function getClientIP(){
 
 async function getClientIPData(){
     try {
-        const res  = await fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_NK0T54ViEPLTqUEEzgSbAh387MGgX&ipAddress=${clientIP}`)
+        const res  = await fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_z21iQeHhr6AGrZcRjPNPmfIw7dYxV&ipAddress=${clientIP}`)
         const data = await res.json()
         console.log(data);
         lat = data.location.lat
