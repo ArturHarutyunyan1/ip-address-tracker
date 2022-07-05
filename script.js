@@ -1,40 +1,86 @@
-const inputForm = document.querySelector('.form')
-const inputValue = document.querySelector('#ipAddress')
-const currentIP = document.querySelector('.currentIP')
-const currentLocation = document.querySelector('.currentLocation')
-const currentTimeZone = document.querySelector('.currentTimezone')
-const currentISP = document.querySelector('.currentIsp')
+const form     = document.querySelector('.form')
+const input    = document.querySelector('.value')
+const ip       = document.querySelector('.ip')
+const city     = document.querySelector('.location')
+const timezone = document.querySelector('.timezone')
+const isp      = document.querySelector('.isp')
+const loader   = document.querySelector('.loader')
 
-inputForm.addEventListener('submit', (e)=>{
-    e.preventDefault()
-    fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_XEzVrz8JJfWUBeOcbiaZliva9S9sF&ipAddress=${inputValue.value}`)
-    .then((res) => res.json())
-    .then((data) => updateMap(data))
-})
+let clientIP = ''
+let map      = null
+let lat
+let lng
 
-function updateMap(data){
-    let {lat} = data.location
-    let {lng} = data.location
-    map.setView([lat, lng], 13)
-    L.marker([lat, lng], {icon: customMarker}).addTo(map)
-    currentIP.innerHTML = `${data.ip}`
-    currentLocation.innerHTML = `${data.location.city}, ${data.location.country}`
-    currentTimeZone.innerHTML = `UTC ${data.location.timezone}`
-    currentISP.innerHTML = `${data.isp}`
+async function getClientIP(){
+    try {
+        const res = await fetch(`https://api.ipify.org?format=json`)
+        clientIP  = res
+    } catch (error) {
+        console.error(error);
+    }
 }
 
-let lat = 51.50853
-let lng = -0.12574
-let map = L.map('map').setView([lat, lng], 13);
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoiYXJ0dXJoYXJ1dHl1bnlhbiIsImEiOiJja3p3YjVzdnc2dHdlMm5vMXlicmlsajYyIn0.tr-NCvCtkVSLGXqJP3lJmQ'
-}).addTo(map);
-let customMarker = L.icon({
-    iconUrl: 'img/icon-location.svg'
+async function getClientIPData(){
+    try {
+        const res  = await fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_NK0T54ViEPLTqUEEzgSbAh387MGgX&ipAddress=${clientIP}`)
+        const data = await res.json()
+        console.log(data);
+        lat = data.location.lat
+        lng = data.location.lng
+        updateMap(data,lat,lng)
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+form.addEventListener('submit', (e)=>{
+    e.preventDefault()
+    let value = input.value
+
+    fetch(`https://geo.ipify.org/api/v2/country,city,vpn?apiKey=at_NK0T54ViEPLTqUEEzgSbAh387MGgX&ipAddress=${value}`)
+    .then((res) => res.json())
+    .then((data) => {
+        lat = data.location.lat
+        lng = data.location.lng
+        updateMap(data,lat, lng)
+    })
 })
-let marker = L.marker([lat, lng], {icon: customMarker}).addTo(map);
+
+function updateMap(data,lat,lng){
+    showLoader()
+    lat
+    lng
+    if (map !== undefined && map !== null) { map.remove();}
+     map = L.map('map').setView([lat, lng], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYXJ0dXJoYXJ1dHl1bnlhbiIsImEiOiJja3p3YjVzdnc2dHdlMm5vMXlicmlsajYyIn0.tr-NCvCtkVSLGXqJP3lJmQ'
+    }).addTo(map);
+    let customMarker = L.icon({
+        iconUrl: 'img/icon-location.svg'
+    })
+    let marker = L.marker([lat, lng], {icon: customMarker}).addTo(map);
+
+    ip.innerHTML = `${data.ip}`
+    city.innerHTML = `${data.location.city}, ${data.location.country}`
+    timezone.innerHTML = `UTC ${data.location.timezone}`
+    isp.innerHTML      = `${data.isp}`
+    hideLoader()
+}
+
+function showLoader(){
+    if(loader.classList.contains('.loaded')){
+        loader.classList.remove('loaded')
+    }
+}
+
+function hideLoader(){
+    loader.classList.add('loaded')
+}
+
+getClientIP()
+getClientIPData()
