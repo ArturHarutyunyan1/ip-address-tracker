@@ -1,0 +1,19 @@
+{
+  "name": "ip-address-tracker",
+  "version": "1.1.0",
+  "description": "Frontend Mentor - IP address tracker solution. This is a solution to the IP address tracker challenge on Frontend Mentor. Frontend Mentor challenges help you improve your coding skills by building realistic projects.",
+  "main": "index.html",
+  "scripts": {
+    "run": "dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturHarutyunyan1/ip-address-tracker.git"
+  },
+  "author": "Artur Harutyunyan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArturHarutyunyan1/ip-address-tracker/issues"
+  },
+  "homepage": "https://github.com/ArturHarutyunyan1/ip-address-tracker#readme"
+}

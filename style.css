@@ -11,6 +11,10 @@
     --dark-gray: hsl(0, 0%, 17%);
 }
 
+html{
+    overflow: hidden;
+}
+
 body{
     font-family: 'Rubik', sans-serif;
 }
@@ -112,7 +116,7 @@ body{
 .map-container{
     position: absolute;
     width: 100%;
-    height: 61%;
+    height: 65%;
     z-index: -1;
 }
 
@@ -198,6 +202,9 @@ body{
 }
 
 @media (max-width: 1024px){
+    .header{
+        padding: 3rem 0;
+    }
     .details{
         width: 90%;
     }
